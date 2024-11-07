@@ -9,5 +9,6 @@ public class App {
     public static void main(String args[]){
         logger.info("Initializing Parking System");
         InteractiveShell.loadInterface();
+        //System.out.println("abc");
     }
 }
