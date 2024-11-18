@@ -9,6 +9,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class ParkingService {
@@ -66,7 +67,7 @@ public class ParkingService {
         return inputReaderUtil.readVehicleRegistrationNumber();
     }
 
-    public ParkingSpot getNextParkingNumberIfAvailable(){
+    public ParkingSpot getNextParkingNumberIfAvailable() throws Exception{
         int parkingNumber=0;
         ParkingSpot parkingSpot = null;
         try{
@@ -81,6 +82,7 @@ public class ParkingService {
             logger.error("Error parsing user input for type of vehicle", ie);
         }catch(Exception e){
             logger.error("Error fetching next available parking slot", e);
+            throw new Exception();
         }
         return parkingSpot;
     }
@@ -104,7 +106,7 @@ public class ParkingService {
         }
     }
 
-    public void processExitingVehicle() {
+    public void processExitingVehicle() throws Exception {
         try{
             String vehicleRegNumber = getVehichleRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
@@ -122,8 +124,11 @@ public class ParkingService {
                 System.out.println("Please pay the parking fare:" + ticket.getPrice());
                 System.out.println("Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
             }else{
-                System.out.println("Unable to update ticket information. Error occurred");
+                throw new SQLException ("Unable to update ticket information. Error occurred");
             }
+        }catch(SQLException e){
+            logger.error("Unable to process exiting vehicle",e);
+            throw new SQLException ("Unable to update ticket information. Error occurred");
         }catch(Exception e){
             logger.error("Unable to process exiting vehicle",e);
         }

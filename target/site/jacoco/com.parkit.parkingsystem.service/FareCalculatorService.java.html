@@ -5,9 +5,9 @@ import com.parkit.parkingsystem.model.Ticket;
 
 <span class="fc" id="L6">public class FareCalculatorService {</span>
 
-    public void calculateFare(Ticket ticket) {
-<span class="fc" id="L9">        calculateFare(ticket, false);</span>
-<span class="fc" id="L10">    }</span>
+/*     public void calculateFare(Ticket ticket) {
+        calculateFare(ticket, false);
+    } */
 
     public void calculateFare(Ticket ticket, boolean discount) {
 <span class="pc bpc" id="L13" title="1 of 4 branches missed.">        if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {</span>
