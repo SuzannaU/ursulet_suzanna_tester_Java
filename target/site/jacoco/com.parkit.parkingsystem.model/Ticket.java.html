@@ -3,38 +3,40 @@
 import java.util.Calendar;
 import java.util.Date;
 
-<span class="fc" id="L6">public class Ticket {</span>
+import com.parkit.parkingsystem.config.Generated;
+
+<span class="fc" id="L8">public class Ticket {</span>
     private int id;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
-<span class="fc" id="L10">    private boolean discount = false;</span>
+<span class="fc" id="L12">    private boolean discount = false;</span>
     private double price;
     private Date inTime;
     private Date outTime;
 
     public int getId() {
-<span class="nc" id="L16">        return id;</span>
+<span class="fc" id="L18">        return id;</span>
     }
 
     public void setId(int id) {
-<span class="nc" id="L20">        this.id = id;</span>
-<span class="nc" id="L21">    }</span>
+<span class="fc" id="L22">        this.id = id;</span>
+<span class="fc" id="L23">    }</span>
 
     public ParkingSpot getParkingSpot() {
-<span class="fc" id="L24">        return parkingSpot;</span>
+<span class="fc" id="L26">        return parkingSpot;</span>
     }
 
     public void setParkingSpot(ParkingSpot parkingSpot) {
-<span class="fc" id="L28">        this.parkingSpot = parkingSpot;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L30">        this.parkingSpot = parkingSpot;</span>
+<span class="fc" id="L31">    }</span>
 
     public String getVehicleRegNumber() {
-<span class="fc" id="L32">        return vehicleRegNumber;</span>
+<span class="fc" id="L34">        return vehicleRegNumber;</span>
     }
 
     public void setVehicleRegNumber(String vehicleRegNumber) {
-<span class="fc" id="L36">        this.vehicleRegNumber = vehicleRegNumber;</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L38">        this.vehicleRegNumber = vehicleRegNumber;</span>
+<span class="fc" id="L39">    }</span>
 /* 
     public boolean getDiscount () {
         return discount;
@@ -45,27 +47,27 @@ import java.util.Date;
     } */
 
     public double getPrice() {
-<span class="fc" id="L48">        return price;</span>
+<span class="fc" id="L50">        return price;</span>
     }
 
     public void setPrice(double price) {
-<span class="fc" id="L52">        this.price = price;</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L54">        this.price = price;</span>
+<span class="fc" id="L55">    }</span>
 
     public Date getInTime() {
-<span class="fc" id="L56">        return inTime;</span>
+<span class="fc" id="L58">        return inTime;</span>
     }
 
     public void setInTime(Date inTime) {
-<span class="fc" id="L60">        this.inTime = inTime;</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L62">        this.inTime = inTime;</span>
+<span class="fc" id="L63">    }</span>
 
     public Date getOutTime() {
-<span class="fc" id="L64">        return outTime;</span>
+<span class="fc" id="L66">        return outTime;</span>
     }
 
     public void setOutTime(Date outTime) {
-<span class="fc" id="L68">        this.outTime = outTime;</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L70">        this.outTime = outTime;</span>
+<span class="fc" id="L71">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
