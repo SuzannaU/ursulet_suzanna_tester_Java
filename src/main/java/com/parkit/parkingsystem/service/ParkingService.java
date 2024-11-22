@@ -16,8 +16,6 @@ public class ParkingService {
 
     private static final Logger logger = LogManager.getLogger("ParkingService");
 
-    //private static FareCalculatorService fareCalculatorService = new FareCalculatorService();
-
     private InputReaderUtil inputReaderUtil;
     private ParkingSpotDAO parkingSpotDAO;
     private  TicketDAO ticketDAO;
@@ -50,6 +48,7 @@ public class ParkingService {
                 ticket.setPrice(0);
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
+                ticket.setDiscount(discount);
                 ticketDAO.saveTicket(ticket);
                 System.out.println("Generated Ticket and saved in DB");
                 if (discount){System.out.println("Heureux de vous revoir ! En tant qu’utilisateur régulier de notre parking, vous allez obtenir une remise de 5%");}
@@ -112,11 +111,7 @@ public class ParkingService {
             Date outTime = new Date();
             ticket.setOutTime(outTime);
             ticketDAO.updateTicket(ticket);
-            boolean discount = false;
-            if(ticketDAO.getNbTicket (vehicleRegNumber) >1 ) {
-                discount = true;
-            }
-            fareCalculatorService.calculateFare(ticket, discount);
+            fareCalculatorService.calculateFare(ticket);
             if(ticketDAO.updateTicket(ticket)) {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();
                 parkingSpot.setAvailable(true);

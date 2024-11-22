@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -84,7 +83,6 @@ public class ParkingServiceTest {
                 ticket.setVehicleRegNumber("ABCDEF");
                 when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
                 when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
-                when(ticketDAO.getNbTicket(any(String.class))).thenReturn(1);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Failed to set up test mock objects");
@@ -102,8 +100,7 @@ public class ParkingServiceTest {
 
             verify(ticketDAO, Mockito.times(1)).getTicket(any(String.class));
             verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
-            verify(ticketDAO, Mockito.times(1)).getNbTicket(any(String.class));
-            verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class), anyBoolean());
+            verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class));
             verify(ticketDAO, Mockito.times(2)).updateTicket(any(Ticket.class));
             verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
         }
@@ -116,8 +113,7 @@ public class ParkingServiceTest {
 
             verify(ticketDAO, Mockito.times(1)).getTicket(any(String.class));
             verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
-            verify(ticketDAO, Mockito.times(1)).getNbTicket(any(String.class));
-            verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class), anyBoolean());
+            verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class));
             verify(ticketDAO, Mockito.times(2)).updateTicket(any(Ticket.class));
         }
     }

@@ -43,14 +43,12 @@ public class ParkingDataBaseIT {
 
     private static DataBaseTestConfig dataBaseTestConfig;
     private static ParkingSpotDAO parkingSpotDAO;
+    private static TicketDAO ticketDAO;
     private static DataBasePrepareService dataBasePrepareService;
     private static FareCalculatorService fareCalculatorService;
 
     @Mock
     private static InputReaderUtil inputReaderUtil;
-
-    @Spy
-    private static TicketDAO ticketDAO;
 
     @BeforeAll
     private static void setUp() throws Exception {
@@ -129,7 +127,17 @@ public class ParkingDataBaseIT {
     @Test
     public void ParkingLotExitRecurringUserTest() throws Exception {
         // Arrange
-        when(ticketDAO.getNbTicket(any(String.class))).thenReturn(2);
+        Connection con = dataBaseTestConfig.getConnection();
+        PreparedStatement ps = con.prepareStatement("INSERT INTO TICKET (PARKING_NUMBER, VEHICLE_REG_NUMBER, IN_TIME, OUT_TIME,PRICE) values(?,?,?,?,?)");
+        ps.setInt(1, 1);
+        ps.setString(2, "ABCDEF");
+        ps.setTimestamp(3, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
+        ps.setTimestamp(4, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
+        ps.setDouble(5, 1.0);
+        ps.execute();
+        dataBaseTestConfig.closePreparedStatement(ps);
+        dataBaseTestConfig.closeConnection(con);
+
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,
                 fareCalculatorService);
         parkingService.processIncomingVehicle();
@@ -137,7 +145,7 @@ public class ParkingDataBaseIT {
         Connection con2 = dataBaseTestConfig.getConnection();
         PreparedStatement ps2 = con2.prepareStatement("UPDATE ticket SET IN_TIME = ? WHERE ID = ?");
         ps2.setTimestamp(1, Timestamp.from(Instant.now().minus(2, ChronoUnit.HOURS)));
-        ps2.setInt(2, 1);
+        ps2.setInt(2, 2);
         ps2.execute();
         dataBaseTestConfig.closePreparedStatement(ps2);
         dataBaseTestConfig.closeConnection(con2);
@@ -148,7 +156,7 @@ public class ParkingDataBaseIT {
         // Assert
         Connection con3 = dataBaseTestConfig.getConnection();
         PreparedStatement ps3 = con3.prepareStatement("SELECT PRICE FROM ticket WHERE ID = ?");
-        ps3.setInt(1, 1);
+        ps3.setInt(1, 2);
         ResultSet rs = ps3.executeQuery();
         double calculatedPrice = 0;
         if (rs.next()) {
@@ -158,11 +166,10 @@ public class ParkingDataBaseIT {
         dataBaseTestConfig.closePreparedStatement(ps3);
         dataBaseTestConfig.closeConnection(con3);
 
-        double expectedPrice = 1.5 * 2*0.95;
+        double expectedPrice = 1.5 * 2 * 0.95; // should be 1.5*2*0.95
         double delta = 0.001;
 
         assertEquals(expectedPrice, calculatedPrice, delta);
-        verify(ticketDAO, Mockito.times(2)).getNbTicket(any(String.class));
 
     }
 
