@@ -10,216 +10,133 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Date;
 
 public class FareCalculatorServiceTest {
 
     private static FareCalculatorService fareCalculatorService;
     private Ticket ticket;
+    private Date inTime;
+    private Date outTime;
+    private ParkingSpot parkingSpot;
 
     @BeforeAll
-    private static void setUp() {
+    static void setUp() {
         fareCalculatorService = new FareCalculatorService();
     }
 
     @BeforeEach
-    private void setUpPerTest() {
+    void setUpPerTest() {
         ticket = new Ticket();
+        outTime = new Date();
     }
 
-    @Test
-    public void calculateFareCar() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-
+    private void initializeTicket(ParkingType type, long durationInMs, boolean discount) {
+        inTime = new Date(System.currentTimeMillis() - durationInMs);
+        parkingSpot = new ParkingSpot(1, type, false);
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
         ticket.setDiscount(discount);
+    }
+
+    @Test
+    void calculateFare_withCorrectCarParameters_setsTheTicketPrice() {
+        initializeTicket(ParkingType.CAR, 60 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-
-        double delta = 0.001;
-        assertEquals(ticket.getPrice(), Fare.CAR_RATE_PER_HOUR, delta);
+        assertEquals(Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareBike() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_withCorrectBikeParameters_setsTheTicketPrice() {
+        initializeTicket(ParkingType.BIKE, 60 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals(ticket.getPrice(), Fare.BIKE_RATE_PER_HOUR, delta);
+        assertEquals(Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareUnkownType() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_withUnknownType_throwsException() {
+        initializeTicket(null, 60 * 60 * 1000, false);
         assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket));
     }
 
     @Test
-    public void calculateFareBikeWithFutureInTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() + (60 * 60 * 1000));
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-
+    void calculateFare_whenCarInTimeInFuture_throwsException() {
+        inTime = new Date(System.currentTimeMillis() + (60 * 60 * 1000));
+        parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
-        assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
+        ticket.setDiscount(false);
+        assertThrows(
+                IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
     }
 
     @Test
-    public void calculateFareBikeWithLessThanOneHourParkingTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (45 * 60 * 1000));// 45 minutes parking time should give 3/4th parking fare
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-
+    void calculateFare_whenBikeInTimeInFuture_throwsException() {
+        inTime = new Date(System.currentTimeMillis() + (60 * 60 * 1000));
+        parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
-        fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals((0.75 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),delta);
+        ticket.setDiscount(false);
+        assertThrows(
+                IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
     }
 
     @Test
-    public void calculateFareCarWithLessThanOneHourParkingTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (45 * 60 * 1000));// 45 minutes parking time should give 3/4th
-                                                                      // parking fare
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenCarParkingTimeUnderOneHour_setsTicketPrice() {
+        initializeTicket(ParkingType.CAR, 45 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals((0.75 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),delta);
+        assertEquals(0.75 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareBikeWithLessThanThirtyMinParkingTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (15 * 60 * 1000));// 15 minutes parking time should be free
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenBikeParkingTimeUnderOneHour_setsTicketPrice() {
+        initializeTicket(ParkingType.BIKE, 45 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals((0 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),delta);
+        assertEquals(0.75 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareCarWithLessThanThirtyMinParkingTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (15 * 60 * 1000));// 15 minutes parking time should be free
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenCarParkingTimeUnderThirtyMinutes_setsTicketPriceToZero() {
+        initializeTicket(ParkingType.CAR, 15 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals((0 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),delta);
+        assertEquals(0, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareCarWithMoreThanADayParkingTime() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (24 * 60 * 60 * 1000));// 24 hours parking time should give 24 *
-                                                                           // parking fare per hour
-        boolean discount = false;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenBikeParkingTimeUnderThirtyMinutes_setsTicketPriceToZero() {
+        initializeTicket(ParkingType.BIKE, 15 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals((24 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),delta);
+        assertEquals(0, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareCarWithDiscountDescription() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-        boolean discount = true;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenCarParkingTimeOverADay_setsTicketPrice() {
+        initializeTicket(ParkingType.CAR, 24 * 60 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals(0.95 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(),delta);
+        assertEquals(24 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
-    public void calculateFareBikeWithDiscountDescription() {
-        Date inTime = new Date();
-        inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-        boolean discount = true;
-        Date outTime = new Date();
-        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-
-        ticket.setInTime(inTime);
-        ticket.setOutTime(outTime);
-        ticket.setParkingSpot(parkingSpot);
-        ticket.setDiscount(discount);
+    void calculateFare_whenBikeParkingTimeOverADay_setsTicketPrice() {
+        initializeTicket(ParkingType.BIKE, 24 * 60 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        
-        double delta = 0.001;
-        assertEquals(0.95 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(),delta);
+        assertEquals(24 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
+    @Test
+    void calculateFare_whenCarTicketDiscountIsTrue_setsTicketPriceWithDiscount() {
+        initializeTicket(ParkingType.CAR, 60 * 60 * 1000, true);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals(0.95 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+    }
+
+    @Test
+    void calculateFare_whenBikeTicketDiscountIsTrue_setsTicketPriceWithDiscount() {
+        initializeTicket(ParkingType.BIKE, 60 * 60 * 1000, true);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals(0.95 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+    }
 }

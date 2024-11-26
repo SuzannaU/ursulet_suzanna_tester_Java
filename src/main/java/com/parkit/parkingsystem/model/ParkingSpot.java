@@ -29,10 +29,16 @@ public class ParkingSpot {
         isAvailable = available;
     }
 
+    /*
+     * 
+     * Two ParkingSpot objects will be considered equals if their numbers are the same
+     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ParkingSpot that = (ParkingSpot) o;
         return number == that.number;
     }

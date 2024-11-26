@@ -45,7 +45,8 @@ public class ParkingServiceTest {
     @BeforeEach
     private void setUpPerTest() {
         try {
-            parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO, fareCalculatorService);
+            parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,
+                    fareCalculatorService);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to set up test mock objects");
@@ -53,27 +54,29 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void processIncomingVehicleTest() throws Exception {
-        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+    public void processIncomingVehicle_withCorrectParameters_doesNotThrow() {
         when(inputReaderUtil.readSelection()).thenReturn(1);
-        when(ticketDAO.getNbTicket(any(String.class))).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
-        when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
 
         assertDoesNotThrow(() -> {
             parkingService.processIncomingVehicle();
         });
 
+        verify(inputReaderUtil, Mockito.times(1)).readSelection();
+        verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
+        verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
+        verify(ticketDAO, Mockito.times(1)).getNbTicket(any(String.class));
+        verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
         verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
-        verify(ticketDAO, Mockito.times(1)).getNbTicket(any(String.class));
     }
 
     @Nested
     @Tag("processExitingVehicle tests")
     class processExitingVehicleTests {
         @BeforeEach
-        private void setUpExiting() throws Exception {
+        private void setUpExiting() {
             try {
                 ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, true);
                 Ticket ticket = new Ticket();
@@ -90,7 +93,7 @@ public class ParkingServiceTest {
         }
 
         @Test
-        public void processExitingVehicleTest() throws Exception {
+        public void processExitingVehicle_withCorrectParameters_doesNotThrow() {
             when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
             when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
 
@@ -101,12 +104,12 @@ public class ParkingServiceTest {
             verify(ticketDAO, Mockito.times(1)).getTicket(any(String.class));
             verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
             verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class));
-            verify(ticketDAO, Mockito.times(2)).updateTicket(any(Ticket.class));
+            verify(ticketDAO, Mockito.times(1)).updateTicket(any(Ticket.class));
             verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
         }
 
         @Test
-        public void processExitingVehicleTest_UnableUpdate() throws Exception {
+        public void processExitingVehicle_whenUnableToUpdateDB_throwsException() {
             when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(false);
 
             assertThrows(SQLException.class, () -> parkingService.processExitingVehicle());
@@ -114,7 +117,7 @@ public class ParkingServiceTest {
             verify(ticketDAO, Mockito.times(1)).getTicket(any(String.class));
             verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
             verify(fareCalculatorService, Mockito.times(1)).calculateFare(any(Ticket.class));
-            verify(ticketDAO, Mockito.times(2)).updateTicket(any(Ticket.class));
+            verify(ticketDAO, Mockito.times(1)).updateTicket(any(Ticket.class));
         }
     }
 
@@ -122,20 +125,21 @@ public class ParkingServiceTest {
     @Tag("getNextParkingNumberIfAvailable tests")
     class getNextParkingNumberIfAvailableTests {
         @Test
-        public void getNextParkingNumberIfAvailableTest() throws Exception {
+        public void getNextParkingNumberIfAvailable_withCorrectParameters_returnsParkingSpot()
+                throws Exception {
             when(inputReaderUtil.readSelection()).thenReturn(1);
-            when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
-
+            when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(1);
             ParkingSpot expectedParkingSpot = new ParkingSpot(1, ParkingType.CAR, true);
+
             ParkingSpot testParkingSpot = parkingService.getNextParkingNumberIfAvailable();
 
             assertEquals(expectedParkingSpot, testParkingSpot);
             verify(inputReaderUtil, Mockito.times(1)).readSelection();
-            verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
+            verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(ParkingType.CAR);
         }
 
         @Test
-        public void getNextParkingNumberIfAvailable_parkingNotFound() {
+        public void getNextParkingNumberIfAvailable_whenParkingNotFound_throwsException() {
             when(inputReaderUtil.readSelection()).thenReturn(1);
             when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(0);
 
@@ -146,7 +150,8 @@ public class ParkingServiceTest {
         }
 
         @Test
-        public void getNextParkingNumberIfAvailableTest_parkingNumberWrongArgument() throws Exception {
+        public void getNextParkingNumberIfAvailable_whenParkingWrongType_returnsNullParkingSpot()
+                throws Exception {
             when(inputReaderUtil.readSelection()).thenReturn(3);
 
             assertNull(parkingService.getNextParkingNumberIfAvailable());

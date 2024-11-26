@@ -1,12 +1,9 @@
 package com.parkit.parkingsystem.integration;
 
-import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
-import com.parkit.parkingsystem.model.ParkingSpot;
-import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.FareCalculatorService;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
@@ -17,16 +14,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +42,8 @@ public class ParkingDataBaseIT {
     @Mock
     private static InputReaderUtil inputReaderUtil;
 
+    private ParkingService parkingService;
+
     @BeforeAll
     private static void setUp() throws Exception {
         dataBaseTestConfig = new DataBaseTestConfig();
@@ -62,115 +56,111 @@ public class ParkingDataBaseIT {
     }
 
     @BeforeEach
-    private void setUpPerTest() throws Exception {
+    void setUpPerTest() throws Exception {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         dataBasePrepareService.clearDataBaseEntries();
+        parkingService = new ParkingService(
+                inputReaderUtil,
+                parkingSpotDAO,
+                ticketDAO,
+                fareCalculatorService);
     }
 
     @AfterAll
-    private static void tearDown() {
-    }
+    private static void tearDown() {}
+
+
 
     @Test
-    public void testParkingACar() throws Exception {
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,
-                fareCalculatorService);
-
+    public void processIncommingVehicle_withCorrectParamters_setsParkingSpotUnavailable()
+            throws Exception {
         parkingService.processIncomingVehicle();
 
-        Connection con = dataBaseTestConfig.getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT AVAILABLE FROM parking WHERE PARKING_NUMBER = 1");
-        ResultSet rs = ps.executeQuery();
-        boolean isAvailable = true;
-        if (rs.next()) {
-            isAvailable = rs.getBoolean("AVAILABLE");
+        String statement = "SELECT AVAILABLE FROM parking WHERE PARKING_NUMBER = 1";
+        try (Connection con = dataBaseTestConfig.getConnection();
+                PreparedStatement ps = con.prepareStatement(statement);) {
+            try (ResultSet rs = ps.executeQuery();) {
+                boolean isAvailable = true;
+                if (rs.next()) {
+                    isAvailable = rs.getBoolean("AVAILABLE");
+                }
+                assertFalse(isAvailable);
+            }
         }
-        dataBaseTestConfig.closeResultSet(rs);
-        dataBaseTestConfig.closePreparedStatement(ps);
-        dataBaseTestConfig.closeConnection(con);
 
-        assertFalse(isAvailable);
-        verify(inputReaderUtil, Mockito.times(1)).readSelection();
-        verify(inputReaderUtil, Mockito.times(1)).readVehicleRegistrationNumber();
+        verify(inputReaderUtil).readSelection();
+        verify(inputReaderUtil).readVehicleRegistrationNumber();
     }
 
     @Test
-    public void testParkingLotExit() throws Exception {
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,
-                fareCalculatorService);
+    public void processExitingVehicle_withCorrectParameters_setsOutTimeAndPrice() throws Exception {
         parkingService.processIncomingVehicle();
 
         parkingService.processExitingVehicle();
-
-        Connection con = dataBaseTestConfig.getConnection();
-        PreparedStatement ps = con
-                .prepareStatement("SELECT OUT_TIME, PRICE FROM ticket WHERE `VEHICLE_REG_NUMBER` = ?");
-        ps.setString(1, "ABCDEF");
-        ResultSet rs = ps.executeQuery();
-        Date outTime = null;
-        Object price = null;
-        if (rs.next()) {
-            outTime = rs.getTimestamp("OUT_TIME");
-            price = rs.getDouble("PRICE");
+        String statement = "SELECT OUT_TIME, PRICE FROM ticket WHERE `VEHICLE_REG_NUMBER` = ?";
+        try (Connection con = dataBaseTestConfig.getConnection();
+                PreparedStatement ps = con.prepareStatement(statement);) {
+            ps.setString(1, "ABCDEF");
+            try (ResultSet rs = ps.executeQuery();) {
+                Date outTime = null;
+                Object price = null;
+                if (rs.next()) {
+                    outTime = rs.getTimestamp("OUT_TIME");
+                    price = rs.getDouble("PRICE");
+                }
+                assertNotNull(outTime);
+                assertNotNull(price);
+            }
         }
-        dataBaseTestConfig.closeResultSet(rs);
-        dataBaseTestConfig.closePreparedStatement(ps);
-        dataBaseTestConfig.closeConnection(con);
-
-        assertNotNull(outTime);
-        assertNotNull(price);
-        verify(inputReaderUtil, Mockito.times(1)).readSelection();
+        verify(inputReaderUtil).readSelection();
         verify(inputReaderUtil, Mockito.times(2)).readVehicleRegistrationNumber();
     }
 
     @Test
-    public void ParkingLotExitRecurringUserTest() throws Exception {
-        // Arrange
-        Connection con = dataBaseTestConfig.getConnection();
-        PreparedStatement ps = con.prepareStatement("INSERT INTO TICKET (PARKING_NUMBER, VEHICLE_REG_NUMBER, IN_TIME, OUT_TIME,PRICE) values(?,?,?,?,?)");
-        ps.setInt(1, 1);
-        ps.setString(2, "ABCDEF");
-        ps.setTimestamp(3, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
-        ps.setTimestamp(4, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
-        ps.setDouble(5, 1.0);
-        ps.execute();
-        dataBaseTestConfig.closePreparedStatement(ps);
-        dataBaseTestConfig.closeConnection(con);
+    public void processExitingVehicle_forRecurringUSer_setsDiscountedPrice() throws Exception {
+        // Insert initial ticket for recurring user
+        String initialStatement =
+                "INSERT INTO TICKET (PARKING_NUMBER, VEHICLE_REG_NUMBER, IN_TIME, OUT_TIME,PRICE) values(?,?,?,?,?)";
+        try (Connection con = dataBaseTestConfig.getConnection();
+                PreparedStatement ps = con.prepareStatement(initialStatement);) {
+            ps.setInt(1, 1);
+            ps.setString(2, "ABCDEF");
+            ps.setTimestamp(3, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
+            ps.setTimestamp(4, Timestamp.from(Instant.now().minus(1, ChronoUnit.DAYS)));
+            ps.setDouble(5, 1.0);
+            ps.execute();
+        }
 
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,
-                fareCalculatorService);
         parkingService.processIncomingVehicle();
 
-        Connection con2 = dataBaseTestConfig.getConnection();
-        PreparedStatement ps2 = con2.prepareStatement("UPDATE ticket SET IN_TIME = ? WHERE ID = ?");
-        ps2.setTimestamp(1, Timestamp.from(Instant.now().minus(2, ChronoUnit.HOURS)));
-        ps2.setInt(2, 2);
-        ps2.execute();
-        dataBaseTestConfig.closePreparedStatement(ps2);
-        dataBaseTestConfig.closeConnection(con2);
+        // Update test ticket for a 2-hour Stay
+        String alterStatement = "UPDATE ticket SET IN_TIME = ? WHERE ID = ?";
+        try (Connection con = dataBaseTestConfig.getConnection();
+                PreparedStatement ps = con.prepareStatement(alterStatement);) {
+            ps.setTimestamp(1, Timestamp.from(Instant.now().minus(2, ChronoUnit.HOURS)));
+            ps.setInt(2, 2);
+            ps.execute();
+        }
 
         // Act
         parkingService.processExitingVehicle();
 
         // Assert
-        Connection con3 = dataBaseTestConfig.getConnection();
-        PreparedStatement ps3 = con3.prepareStatement("SELECT PRICE FROM ticket WHERE ID = ?");
-        ps3.setInt(1, 2);
-        ResultSet rs = ps3.executeQuery();
-        double calculatedPrice = 0;
-        if (rs.next()) {
-            calculatedPrice = rs.getDouble("PRICE");
+        String resultStatement = "SELECT PRICE FROM ticket WHERE ID = ?";
+        try (Connection con = dataBaseTestConfig.getConnection();
+                PreparedStatement ps = con.prepareStatement(resultStatement);) {
+            ps.setInt(1, 2);
+            try (ResultSet rs = ps.executeQuery();) {
+                double calculatedPrice = 0;
+                if (rs.next()) {
+                    calculatedPrice = rs.getDouble("PRICE");
+                }
+                double expectedPrice = 1.5 * 2 * 0.95;
+                assertEquals(expectedPrice, calculatedPrice, 0.001);
+            }
         }
-        dataBaseTestConfig.closeResultSet(rs);
-        dataBaseTestConfig.closePreparedStatement(ps3);
-        dataBaseTestConfig.closeConnection(con3);
-
-        double expectedPrice = 1.5 * 2 * 0.95; // should be 1.5*2*0.95
-        double delta = 0.001;
-
-        assertEquals(expectedPrice, calculatedPrice, delta);
-
+        verify(inputReaderUtil).readSelection();
+        verify(inputReaderUtil, Mockito.times(2)).readVehicleRegistrationNumber();
     }
-
 }
