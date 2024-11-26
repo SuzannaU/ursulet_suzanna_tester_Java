@@ -100,14 +100,14 @@ public class FareCalculatorServiceTest {
 
     @Test
     void calculateFare_whenCarParkingTimeUnderThirtyMinutes_setsTicketPriceToZero() {
-        initializeTicket(ParkingType.CAR, 15 * 60 * 1000, false);
+        initializeTicket(ParkingType.CAR, 29 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
         assertEquals(0, ticket.getPrice(), 0.001);
     }
 
     @Test
     void calculateFare_whenBikeParkingTimeUnderThirtyMinutes_setsTicketPriceToZero() {
-        initializeTicket(ParkingType.BIKE, 15 * 60 * 1000, false);
+        initializeTicket(ParkingType.BIKE, 29 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
         assertEquals(0, ticket.getPrice(), 0.001);
     }
