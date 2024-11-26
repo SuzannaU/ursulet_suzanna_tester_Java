@@ -70,8 +70,6 @@ public class ParkingDataBaseIT {
     @AfterAll
     private static void tearDown() {}
 
-
-
     @Test
     public void processIncommingVehicle_withCorrectParamters_setsParkingSpotUnavailable()
             throws Exception {
@@ -96,6 +94,7 @@ public class ParkingDataBaseIT {
     @Test
     public void processExitingVehicle_withCorrectParameters_setsOutTimeAndPrice() throws Exception {
         parkingService.processIncomingVehicle();
+        Thread.sleep(1000); // adds delay to ensure OUT_TIME is always after IN_TIME
 
         parkingService.processExitingVehicle();
         String statement = "SELECT OUT_TIME, PRICE FROM ticket WHERE `VEHICLE_REG_NUMBER` = ?";
@@ -113,6 +112,7 @@ public class ParkingDataBaseIT {
                 assertNotNull(price);
             }
         }
+
         verify(inputReaderUtil).readSelection();
         verify(inputReaderUtil, Mockito.times(2)).readVehicleRegistrationNumber();
     }
