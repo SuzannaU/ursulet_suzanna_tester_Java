@@ -1,0 +1,690 @@
+# Created on 2024-11-27T11:34:55.941
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created on 2024-11-27T11:34:55.942
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
+
+# Created on 2024-11-27T11:34:55.943
+	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:242)
+
+# Created on 2024-11-27T11:34:55.943
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+
+# Created on 2024-11-27T11:34:55.945
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:610)
+
+# Created on 2024-11-27T11:34:55.945
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created on 2024-11-27T11:34:55.946
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1113)
+
+# Created on 2024-11-27T11:34:55.947
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:182)
+
+# Created on 2024-11-27T11:34:55.947
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:821)
+
+# Created on 2024-11-27T11:34:55.948
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:741)
+
+# Created on 2024-11-27T11:34:55.949
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:621)
+
+# Created on 2024-11-27T11:34:55.949
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+# Created on 2024-11-27T11:34:55.950
+	at java.base/java.lang.Class.forName(Class.java:620)
+
+# Created on 2024-11-27T11:34:55.951
+	at java.base/java.lang.Class.forName(Class.java:595)
+
+# Created on 2024-11-27T11:34:55.951
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:855)
+
+# Created on 2024-11-27T11:34:55.951
+	at java.base/java.util.ServiceLoader$ModuleServicesLookupIterator.hasNext(ServiceLoader.java:1080)
+
+# Created on 2024-11-27T11:34:55.952
+	at java.base/java.util.ServiceLoader$2.hasNext(ServiceLoader.java:1305)
+
+# Created on 2024-11-27T11:34:55.952
+	at java.base/java.util.ServiceLoader$3.hasNext(ServiceLoader.java:1387)
+
+# Created on 2024-11-27T11:34:55.953
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter.lambda$new$0(CLDRLocaleProviderAdapter.java:84)
+
+# Created on 2024-11-27T11:34:55.953
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+
+# Created on 2024-11-27T11:34:55.954
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter.<init>(CLDRLocaleProviderAdapter.java:83)
+
+# Created on 2024-11-27T11:34:55.954
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+
+# Created on 2024-11-27T11:34:55.954
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+
+# Created on 2024-11-27T11:34:55.955
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+
+# Created on 2024-11-27T11:34:55.955
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.forType(LocaleProviderAdapter.java:186)
+
+# Created on 2024-11-27T11:34:55.956
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.findAdapter(LocaleProviderAdapter.java:285)
+
+# Created on 2024-11-27T11:34:55.956
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.getAdapter(LocaleProviderAdapter.java:256)
+
+# Created on 2024-11-27T11:34:55.957
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:972)
+
+# Created on 2024-11-27T11:34:55.957
+	at java.base/java.text.NumberFormat.getNumberInstance(NumberFormat.java:518)
+
+# Created on 2024-11-27T11:34:55.958
+	at java.base/java.util.Scanner.useLocale(Scanner.java:1295)
+
+# Created on 2024-11-27T11:34:55.958
+	at java.base/java.util.Scanner.<init>(Scanner.java:564)
+
+# Created on 2024-11-27T11:34:55.959
+	at java.base/java.util.Scanner.<init>(Scanner.java:617)
+
+# Created on 2024-11-27T11:34:55.960
+	at java.base/java.util.Scanner.<init>(Scanner.java:603)
+
+# Created on 2024-11-27T11:34:55.960
+	at org.apache.maven.surefire.booter.PpidChecker$ProcessInfoConsumer.execute(PpidChecker.java:300)
+
+# Created on 2024-11-27T11:34:55.961
+	at org.apache.maven.surefire.booter.PpidChecker.windows(PpidChecker.java:193)
+
+# Created on 2024-11-27T11:34:55.961
+	at org.apache.maven.surefire.booter.PpidChecker.isProcessAlive(PpidChecker.java:102)
+
+# Created on 2024-11-27T11:34:55.962
+	at org.apache.maven.surefire.booter.ForkedBooter$2.run(ForkedBooter.java:213)
+
+# Created on 2024-11-27T11:34:55.963
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+
+# Created on 2024-11-27T11:34:55.963
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+
+# Created on 2024-11-27T11:34:55.964
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+
+# Created on 2024-11-27T11:34:55.964
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+
+# Created on 2024-11-27T11:34:55.965
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+
+# Created on 2024-11-27T11:34:55.965
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+# Created on 2024-11-27T11:34:55.966
+Caused by: java.io.IOException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created on 2024-11-27T11:34:55.967
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
+
+# Created on 2024-11-27T11:34:55.967
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
+
+# Created on 2024-11-27T11:34:55.968
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
+
+# Created on 2024-11-27T11:34:55.968
+	... 41 more
+
+# Created on 2024-11-27T11:34:55.969
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 66
+
+# Created on 2024-11-27T11:34:55.970
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
+
+# Created on 2024-11-27T11:34:55.970
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
+
+# Created on 2024-11-27T11:34:55.971
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:162)
+
+# Created on 2024-11-27T11:34:55.972
+	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
+
+# Created on 2024-11-27T11:34:55.972
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
+
+# Created on 2024-11-27T11:34:55.973
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
+
+# Created on 2024-11-27T11:34:55.973
+	... 42 more
+
+# Created on 2024-11-27T11:34:55.973
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/util/resources/provider/LocaleDataProvider.
+
+# Created on 2024-11-27T11:34:55.974
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
+
+# Created on 2024-11-27T11:34:55.974
+	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:242)
+
+# Created on 2024-11-27T11:34:55.975
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+
+# Created on 2024-11-27T11:34:55.975
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:610)
+
+# Created on 2024-11-27T11:34:55.976
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created on 2024-11-27T11:34:55.976
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1113)
+
+# Created on 2024-11-27T11:34:55.977
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:182)
+
+# Created on 2024-11-27T11:34:55.977
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:821)
+
+# Created on 2024-11-27T11:34:55.978
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:741)
+
+# Created on 2024-11-27T11:34:55.978
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:621)
+
+# Created on 2024-11-27T11:34:55.979
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+# Created on 2024-11-27T11:34:55.979
+	at java.base/java.lang.Class.forName(Class.java:620)
+
+# Created on 2024-11-27T11:34:55.980
+	at java.base/java.lang.Class.forName(Class.java:595)
+
+# Created on 2024-11-27T11:34:55.980
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:855)
+
+# Created on 2024-11-27T11:34:55.981
+	at java.base/java.util.ServiceLoader$ModuleServicesLookupIterator.hasNext(ServiceLoader.java:1080)
+
+# Created on 2024-11-27T11:34:55.981
+	at java.base/java.util.ServiceLoader$2.hasNext(ServiceLoader.java:1305)
+
+# Created on 2024-11-27T11:34:55.981
+	at java.base/java.util.ServiceLoader$3.hasNext(ServiceLoader.java:1387)
+
+# Created on 2024-11-27T11:34:55.982
+	at java.base/sun.util.resources.Bundles$2.run(Bundles.java:267)
+
+# Created on 2024-11-27T11:34:55.982
+	at java.base/sun.util.resources.Bundles$2.run(Bundles.java:265)
+
+# Created on 2024-11-27T11:34:55.983
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+
+# Created on 2024-11-27T11:34:55.983
+	at java.base/sun.util.resources.Bundles.loadBundleFromProviders(Bundles.java:264)
+
+# Created on 2024-11-27T11:34:55.984
+	at java.base/sun.util.resources.Bundles.findBundleOf(Bundles.java:201)
+
+# Created on 2024-11-27T11:34:55.984
+	at java.base/sun.util.resources.Bundles.findBundleOf(Bundles.java:160)
+
+# Created on 2024-11-27T11:34:55.985
+	at java.base/sun.util.resources.Bundles.loadBundleOf(Bundles.java:145)
+
+# Created on 2024-11-27T11:34:55.985
+	at java.base/sun.util.resources.Bundles.of(Bundles.java:106)
+
+# Created on 2024-11-27T11:34:55.986
+	at java.base/sun.util.resources.LocaleData$1.run(LocaleData.java:185)
+
+# Created on 2024-11-27T11:34:55.986
+	at java.base/sun.util.resources.LocaleData$1.run(LocaleData.java:182)
+
+# Created on 2024-11-27T11:34:55.986
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+
+# Created on 2024-11-27T11:34:55.987
+	at java.base/sun.util.resources.LocaleData.getBundle(LocaleData.java:182)
+
+# Created on 2024-11-27T11:34:55.987
+	at java.base/sun.util.resources.LocaleData.getNumberFormatData(LocaleData.java:177)
+
+# Created on 2024-11-27T11:34:55.988
+	at java.base/sun.util.locale.provider.LocaleResources.getNumberPatterns(LocaleResources.java:533)
+
+# Created on 2024-11-27T11:34:55.988
+	at java.base/sun.util.locale.provider.NumberFormatProviderImpl.getInstance(NumberFormatProviderImpl.java:184)
+
+# Created on 2024-11-27T11:34:55.989
+	at java.base/sun.util.locale.provider.NumberFormatProviderImpl.getNumberInstance(NumberFormatProviderImpl.java:151)
+
+# Created on 2024-11-27T11:34:55.989
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:988)
+
+# Created on 2024-11-27T11:34:55.989
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:974)
+
+# Created on 2024-11-27T11:34:55.990
+	at java.base/java.text.NumberFormat.getNumberInstance(NumberFormat.java:518)
+
+# Created on 2024-11-27T11:34:55.990
+	at java.base/java.util.Scanner.useLocale(Scanner.java:1295)
+
+# Created on 2024-11-27T11:34:55.991
+	at java.base/java.util.Scanner.<init>(Scanner.java:564)
+
+# Created on 2024-11-27T11:34:55.991
+	at java.base/java.util.Scanner.<init>(Scanner.java:617)
+
+# Created on 2024-11-27T11:34:55.992
+	at java.base/java.util.Scanner.<init>(Scanner.java:603)
+
+# Created on 2024-11-27T11:34:55.992
+	at org.apache.maven.surefire.booter.PpidChecker$ProcessInfoConsumer.execute(PpidChecker.java:300)
+
+# Created on 2024-11-27T11:34:55.992
+	at org.apache.maven.surefire.booter.PpidChecker.windows(PpidChecker.java:193)
+
+# Created on 2024-11-27T11:34:55.993
+	at org.apache.maven.surefire.booter.PpidChecker.isProcessAlive(PpidChecker.java:102)
+
+# Created on 2024-11-27T11:34:55.993
+	at org.apache.maven.surefire.booter.ForkedBooter$2.run(ForkedBooter.java:213)
+
+# Created on 2024-11-27T11:34:55.994
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+
+# Created on 2024-11-27T11:34:55.994
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+
+# Created on 2024-11-27T11:34:55.995
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+
+# Created on 2024-11-27T11:34:55.995
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+
+# Created on 2024-11-27T11:34:55.995
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+
+# Created on 2024-11-27T11:34:55.996
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+# Created on 2024-11-27T11:34:55.996
+Caused by: java.io.IOException: Error while instrumenting sun/util/resources/provider/LocaleDataProvider.
+
+# Created on 2024-11-27T11:34:55.997
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
+
+# Created on 2024-11-27T11:34:55.997
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
+
+# Created on 2024-11-27T11:34:55.997
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
+
+# Created on 2024-11-27T11:34:55.998
+	... 49 more
+
+# Created on 2024-11-27T11:34:55.998
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 66
+
+# Created on 2024-11-27T11:34:55.999
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
+
+# Created on 2024-11-27T11:34:55.999
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
+
+# Created on 2024-11-27T11:34:56.000
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:162)
+
+# Created on 2024-11-27T11:34:56.000
+	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
+
+# Created on 2024-11-27T11:34:56.001
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
+
+# Created on 2024-11-27T11:34:56.001
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
+
+# Created on 2024-11-27T11:34:56.002
+	... 50 more
+
+# Created on 2024-11-27T11:34:56.002
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/text/resources/cldr/ext/FormatData_fr.
+
+# Created on 2024-11-27T11:34:56.003
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
+
+# Created on 2024-11-27T11:34:56.003
+	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:242)
+
+# Created on 2024-11-27T11:34:56.003
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+
+# Created on 2024-11-27T11:34:56.004
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:610)
+
+# Created on 2024-11-27T11:34:56.005
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created on 2024-11-27T11:34:56.005
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1113)
+
+# Created on 2024-11-27T11:34:56.006
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:182)
+
+# Created on 2024-11-27T11:34:56.006
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:821)
+
+# Created on 2024-11-27T11:34:56.007
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:741)
+
+# Created on 2024-11-27T11:34:56.007
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:621)
+
+# Created on 2024-11-27T11:34:56.008
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:637)
+
+# Created on 2024-11-27T11:34:56.008
+	at java.base/java.lang.Class.forName(Class.java:620)
+
+# Created on 2024-11-27T11:34:56.008
+	at java.base/java.lang.Class.forName(Class.java:595)
+
+# Created on 2024-11-27T11:34:56.009
+	at jdk.localedata/sun.util.resources.provider.LocaleDataProvider.loadResourceBundle(LocaleDataProvider.java:54)
+
+# Created on 2024-11-27T11:34:56.009
+	at jdk.localedata/sun.util.resources.provider.LocaleDataProvider.getBundle(LocaleDataProvider.java:40)
+
+# Created on 2024-11-27T11:34:56.010
+	at java.base/sun.util.resources.Bundles$2.run(Bundles.java:270)
+
+# Created on 2024-11-27T11:34:56.010
+	at java.base/sun.util.resources.Bundles$2.run(Bundles.java:265)
+
+# Created on 2024-11-27T11:34:56.010
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+
+# Created on 2024-11-27T11:34:56.011
+	at java.base/sun.util.resources.Bundles.loadBundleFromProviders(Bundles.java:264)
+
+# Created on 2024-11-27T11:34:56.011
+	at java.base/sun.util.resources.Bundles.findBundleOf(Bundles.java:201)
+
+# Created on 2024-11-27T11:34:56.012
+	at java.base/sun.util.resources.Bundles.findBundleOf(Bundles.java:160)
+
+# Created on 2024-11-27T11:34:56.012
+	at java.base/sun.util.resources.Bundles.loadBundleOf(Bundles.java:145)
+
+# Created on 2024-11-27T11:34:56.013
+	at java.base/sun.util.resources.Bundles.of(Bundles.java:106)
+
+# Created on 2024-11-27T11:34:56.014
+	at java.base/sun.util.resources.LocaleData$1.run(LocaleData.java:185)
+
+# Created on 2024-11-27T11:34:56.014
+	at java.base/sun.util.resources.LocaleData$1.run(LocaleData.java:182)
+
+# Created on 2024-11-27T11:34:56.015
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319)
+
+# Created on 2024-11-27T11:34:56.015
+	at java.base/sun.util.resources.LocaleData.getBundle(LocaleData.java:182)
+
+# Created on 2024-11-27T11:34:56.016
+	at java.base/sun.util.resources.LocaleData.getNumberFormatData(LocaleData.java:177)
+
+# Created on 2024-11-27T11:34:56.017
+	at java.base/sun.util.locale.provider.LocaleResources.getNumberPatterns(LocaleResources.java:533)
+
+# Created on 2024-11-27T11:34:56.017
+	at java.base/sun.util.locale.provider.NumberFormatProviderImpl.getInstance(NumberFormatProviderImpl.java:184)
+
+# Created on 2024-11-27T11:34:56.017
+	at java.base/sun.util.locale.provider.NumberFormatProviderImpl.getNumberInstance(NumberFormatProviderImpl.java:151)
+
+# Created on 2024-11-27T11:34:56.018
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:988)
+
+# Created on 2024-11-27T11:34:56.018
+	at java.base/java.text.NumberFormat.getInstance(NumberFormat.java:974)
+
+# Created on 2024-11-27T11:34:56.019
+	at java.base/java.text.NumberFormat.getNumberInstance(NumberFormat.java:518)
+
+# Created on 2024-11-27T11:34:56.019
+	at java.base/java.util.Scanner.useLocale(Scanner.java:1295)
+
+# Created on 2024-11-27T11:34:56.020
+	at java.base/java.util.Scanner.<init>(Scanner.java:564)
+
+# Created on 2024-11-27T11:34:56.020
+	at java.base/java.util.Scanner.<init>(Scanner.java:617)
+
+# Created on 2024-11-27T11:34:56.021
+	at java.base/java.util.Scanner.<init>(Scanner.java:603)
+
+# Created on 2024-11-27T11:34:56.021
+	at org.apache.maven.surefire.booter.PpidChecker$ProcessInfoConsumer.execute(PpidChecker.java:300)
+
+# Created on 2024-11-27T11:34:56.022
+	at org.apache.maven.surefire.booter.PpidChecker.windows(PpidChecker.java:193)
+
+# Created on 2024-11-27T11:34:56.022
+	at org.apache.maven.surefire.booter.PpidChecker.isProcessAlive(PpidChecker.java:102)
+
+# Created on 2024-11-27T11:34:56.022
+	at org.apache.maven.surefire.booter.ForkedBooter$2.run(ForkedBooter.java:213)
+
+# Created on 2024-11-27T11:34:56.023
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+
+# Created on 2024-11-27T11:34:56.023
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+
+# Created on 2024-11-27T11:34:56.024
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+
+# Created on 2024-11-27T11:34:56.024
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+
+# Created on 2024-11-27T11:34:56.025
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+
+# Created on 2024-11-27T11:34:56.025
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+
+# Created on 2024-11-27T11:34:56.026
+Caused by: java.io.IOException: Error while instrumenting sun/text/resources/cldr/ext/FormatData_fr.
+
+# Created on 2024-11-27T11:34:56.026
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
+
+# Created on 2024-11-27T11:34:56.026
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
+
+# Created on 2024-11-27T11:34:56.027
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
+
+# Created on 2024-11-27T11:34:56.027
+	... 47 more
+
+# Created on 2024-11-27T11:34:56.028
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 66
+
+# Created on 2024-11-27T11:34:56.028
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
+
+# Created on 2024-11-27T11:34:56.028
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
+
+# Created on 2024-11-27T11:34:56.029
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:162)
+
+# Created on 2024-11-27T11:34:56.029
+	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
+
+# Created on 2024-11-27T11:34:56.029
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
+
+# Created on 2024-11-27T11:34:56.030
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
+
+# Created on 2024-11-27T11:34:56.030
+	... 48 more
+
+# Created on 2024-11-27T11:34:56.228
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.229
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.231
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.231
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.239
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.239
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.239
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.240
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.244
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.245
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.245
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.246
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.256
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.257
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.257
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.258
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.259
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.259
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.259
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.260
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.261
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.261
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.262
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.262
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.280
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.281
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.281
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.282
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.282
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.283
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.283
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.284
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.285
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.286
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.287
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.287
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.289
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.289
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.290
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.290
+WARNING: Configuration error: invalid tag syntax in @Tag("getNextParkingNumberIfAvailable tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$getNextParkingNumberIfAvailableTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.291
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.291
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.292
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.292
+WARNING: Configuration error: invalid tag syntax in @Tag("processExitingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processExitingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.293
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.293
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+
+# Created on 2024-11-27T11:34:56.294
+nov. 27, 2024 11:34:56 AM org.junit.jupiter.engine.descriptor.JupiterTestDescriptor lambda$getTags$1
+
+# Created on 2024-11-27T11:34:56.294
+WARNING: Configuration error: invalid tag syntax in @Tag("processIncomingVehicle tests") declaration on [class com.parkit.parkingsystem.ParkingServiceTest$processIncomingVehicleTests]. Tag will be ignored.
+

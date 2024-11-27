@@ -17,7 +17,6 @@ public class FareCalculatorService {
             ticket.setPrice(0.0);
         } else {
             double basePrice;
-
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR: {
                     basePrice = duration / 60.0 * Fare.CAR_RATE_PER_HOUR;

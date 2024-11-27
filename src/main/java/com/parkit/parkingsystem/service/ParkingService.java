@@ -29,7 +29,7 @@ public class ParkingService {
         this.fareCalculatorService = fareCalculatorService;
     }
 
-    public void processIncomingVehicle() {
+    public void processIncomingVehicle() throws Exception {
         try {
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
             if (parkingSpot != null && parkingSpot.getId() > 0) {
@@ -56,13 +56,14 @@ public class ParkingService {
                     System.out.println(
                             "Nice to see you again! As a recurrent user, you'll get a 5% discount on your parking fare");
                 }
-                System.out
-                        .println("Please park your vehicle in spot number:" + parkingSpot.getId());
-                System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber
-                        + " is:" + inTime);
+                System.out.println(
+                        "Please park your vehicle in spot number: " + parkingSpot.getId());
+                System.out.println(
+                        "For vehicle number:" + vehicleRegNumber + ", in-time is: " + inTime);
             }
         } catch (Exception e) {
             logger.error("Unable to process incoming vehicle", e);
+            throw new Exception();
         }
     }
 
