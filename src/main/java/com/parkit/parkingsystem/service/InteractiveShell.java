@@ -24,10 +24,12 @@ public class InteractiveShell {
             int option = inputReaderUtil.readSelection();
             switch (option) {
                 case 1: {
+                    System.out.println("Please select vehicle type from menu");
                     parkingService.processIncomingVehicle();
                     break;
                 }
                 case 2: {
+                    System.out.println("Please type the vehicle registration number and press enter key");
                     parkingService.processExitingVehicle();
                     break;
                 }

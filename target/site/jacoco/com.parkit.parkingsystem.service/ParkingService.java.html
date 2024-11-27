@@ -21,8 +21,8 @@ public class ParkingService {
     private TicketDAO ticketDAO;
     private FareCalculatorService fareCalculatorService;
 
-    public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO,
-<span class="fc" id="L25">            TicketDAO ticketDAO, FareCalculatorService fareCalculatorService) {</span>
+<span class="fc" id="L24">    public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO,</span>
+            TicketDAO ticketDAO, FareCalculatorService fareCalculatorService) {
 <span class="fc" id="L26">        this.inputReaderUtil = inputReaderUtil;</span>
 <span class="fc" id="L27">        this.parkingSpotDAO = parkingSpotDAO;</span>
 <span class="fc" id="L28">        this.ticketDAO = ticketDAO;</span>
@@ -54,17 +54,17 @@ public class ParkingService {
 <span class="fc" id="L54">                System.out.println(&quot;Generated Ticket and saved in DB&quot;);</span>
 <span class="fc bfc" id="L55" title="All 2 branches covered.">                if (discount) {</span>
 <span class="fc" id="L56">                    System.out.println(</span>
-                            &quot;Nice to see you again! As a recurrent user, you'll get a 5% discount on your parking fare&quot;);
+<span class="fc" id="L57">                            &quot;Nice to see you again! As a recurrent user, you'll get a 5% discount on your parking fare&quot;);</span>
                 }
-<span class="fc" id="L59">                System.out</span>
-<span class="fc" id="L60">                        .println(&quot;Please park your vehicle in spot number:&quot; + parkingSpot.getId());</span>
-<span class="fc" id="L61">                System.out.println(&quot;Recorded in-time for vehicle number:&quot; + vehicleRegNumber</span>
-                        + &quot; is:&quot; + inTime);
+<span class="fc" id="L59">                System.out.println(</span>
+<span class="fc" id="L60">                        &quot;Please park your vehicle in spot number: &quot; + parkingSpot.getId());</span>
+<span class="fc" id="L61">                System.out.println(</span>
+<span class="fc" id="L62">                        &quot;For vehicle number:&quot; + vehicleRegNumber + &quot;, in-time is: &quot; + inTime);</span>
             }
 <span class="fc" id="L64">        } catch (Exception e) {</span>
 <span class="fc" id="L65">            logger.error(&quot;Unable to process incoming vehicle&quot;, e);</span>
 <span class="fc" id="L66">            throw new Exception();</span>
-<span class="fc" id="L67">        }</span>
+        }
 <span class="fc" id="L68">    }</span>
 
     private String getVehichleRegNumber() {
@@ -80,13 +80,13 @@ public class ParkingService {
 <span class="fc" id="L80">            parkingNumber = parkingSpotDAO.getNextAvailableSlot(parkingType);</span>
 <span class="fc bfc" id="L81" title="All 2 branches covered.">            if (parkingNumber &gt; 0) {</span>
 <span class="fc" id="L82">                parkingSpot = new ParkingSpot(parkingNumber, parkingType, true);</span>
-            } else {
+<span class="fc" id="L83">            } else {</span>
 <span class="fc" id="L84">                throw new Exception(</span>
-                        &quot;Error fetching parking number from DB. Parking slots might be full&quot;);
+<span class="fc" id="L85">                        &quot;Error fetching parking number from DB. Parking slots might be full&quot;);</span>
             }
 <span class="fc" id="L87">        } catch (IllegalArgumentException ie) {</span>
 <span class="fc" id="L88">            logger.error(&quot;Error parsing user input for type of vehicle&quot;, ie);</span>
-<span class="fc" id="L89">        }</span>
+        }
 <span class="fc" id="L90">        return parkingSpot;</span>
     }
 

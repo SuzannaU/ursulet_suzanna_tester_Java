@@ -21,6 +21,10 @@ public class App {
                 ticketDAO,
                 fareCalculatorService);
         InteractiveShell interactiveShell = new InteractiveShell(inputReaderUtil, parkingService);
-        interactiveShell.loadInterface();
+        try {
+            interactiveShell.loadInterface();
+        } catch (Exception e) {
+            logger.error("Error occured running Parking System", e);
+        }
     }
 }

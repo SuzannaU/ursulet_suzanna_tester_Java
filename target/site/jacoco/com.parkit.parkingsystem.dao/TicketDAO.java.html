@@ -57,7 +57,7 @@ import java.sql.Timestamp;
 <span class="fc" id="L57">                ParkingSpot parkingSpot = new ParkingSpot(</span>
 <span class="fc" id="L58">                        rs.getInt(1),</span>
 <span class="fc" id="L59">                        ParkingType.valueOf(rs.getString(7)),</span>
-                        false);
+<span class="fc" id="L60">                        false);</span>
 <span class="fc" id="L61">                ticket.setParkingSpot(parkingSpot);</span>
 <span class="fc" id="L62">                ticket.setId(rs.getInt(2));</span>
 <span class="fc" id="L63">                ticket.setVehicleRegNumber(vehicleRegNumber);</span>
@@ -68,7 +68,7 @@ import java.sql.Timestamp;
             }
 <span class="fc" id="L69">            dataBaseConfig.closeResultSet(rs);</span>
 <span class="fc" id="L70">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L71">        } catch (SQLException | ClassNotFoundException e) {</span>
+<span class="pc" id="L71">        } catch (SQLException | ClassNotFoundException e) {</span>
 <span class="nc" id="L72">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
         } finally {
 <span class="fc" id="L74">            dataBaseConfig.closeConnection(con);</span>
@@ -109,7 +109,7 @@ import java.sql.Timestamp;
             }
 <span class="fc" id="L110">            dataBaseConfig.closeResultSet(rs);</span>
 <span class="fc" id="L111">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L112">        } catch (SQLException | ClassNotFoundException e) {</span>
+<span class="pc" id="L112">        } catch (SQLException | ClassNotFoundException e) {</span>
 <span class="nc" id="L113">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
         } finally {
 <span class="fc" id="L115">            dataBaseConfig.closeConnection(con);</span>
