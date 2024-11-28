@@ -22,35 +22,33 @@ public class InteractiveShell {
 <span class="fc bfc" id="L22" title="All 2 branches covered.">        while (continueApp) {</span>
 <span class="fc" id="L23">            loadMenu();</span>
 <span class="fc" id="L24">            int option = inputReaderUtil.readSelection();</span>
-<span class="fc bfc" id="L25" title="All 4 branches covered.">            switch (option) {</span>
+<span class="pc bpc" id="L25" title="2 of 4 branches missed.">            switch (option) {</span>
                 case 1: {
-<span class="fc" id="L27">                    System.out.println(&quot;Please select vehicle type from menu&quot;);</span>
-<span class="nc" id="L28">                    parkingService.processIncomingVehicle();</span>
-<span class="nc" id="L29">                    break;</span>
+<span class="nc" id="L27">                    parkingService.processIncomingVehicle();</span>
+<span class="nc" id="L28">                    break;</span>
                 }
                 case 2: {
-<span class="fc" id="L32">                    System.out.println(&quot;Please type the vehicle registration number and press enter key&quot;);</span>
-<span class="nc" id="L33">                    parkingService.processExitingVehicle();</span>
-<span class="nc" id="L34">                    break;</span>
+<span class="nc" id="L31">                    parkingService.processExitingVehicle();</span>
+<span class="nc" id="L32">                    break;</span>
                 }
                 case 3: {
-<span class="fc" id="L37">                    System.out.println(&quot;Exiting from the system!&quot;);</span>
-<span class="fc" id="L38">                    continueApp = false;</span>
-<span class="fc" id="L39">                    break;</span>
+<span class="fc" id="L35">                    System.out.println(&quot;Exiting from the system!&quot;);</span>
+<span class="fc" id="L36">                    continueApp = false;</span>
+<span class="fc" id="L37">                    break;</span>
                 }
                 default:
-<span class="fc" id="L42">                    System.out.println(</span>
+<span class="fc" id="L40">                    System.out.println(</span>
                             &quot;Unsupported option. Please enter a number corresponding to the provided menu&quot;);
             }
-<span class="fc" id="L45">        }</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">    }</span>
 
     private static void loadMenu() {
-<span class="fc" id="L49">        System.out.println(&quot;Please select an option. Simply enter the number to choose an action&quot;);</span>
-<span class="fc" id="L50">        System.out.println(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;);</span>
-<span class="fc" id="L51">        System.out.println(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;);</span>
-<span class="fc" id="L52">        System.out.println(&quot;3 Shutdown System&quot;);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L47">        System.out.println(&quot;Please select an option. Simply enter the number to choose an action&quot;);</span>
+<span class="fc" id="L48">        System.out.println(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;);</span>
+<span class="fc" id="L49">        System.out.println(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;);</span>
+<span class="fc" id="L50">        System.out.println(&quot;3 Shutdown System&quot;);</span>
+<span class="fc" id="L51">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
