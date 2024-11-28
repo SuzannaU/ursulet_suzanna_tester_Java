@@ -65,6 +65,9 @@ public class TicketDAO {
                 ticket.setInTime(rs.getTimestamp(4));
                 ticket.setOutTime(rs.getTimestamp(5));
                 ticket.setDiscount(rs.getBoolean(6));
+            } else {
+                logger.error("No ticket was found with this registration number");
+                throw new NullPointerException();
             }
             dataBaseConfig.closeResultSet(rs);
             dataBaseConfig.closePreparedStatement(ps);

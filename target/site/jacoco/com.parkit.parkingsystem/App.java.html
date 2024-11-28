@@ -16,16 +16,16 @@ import org.apache.logging.log4j.Logger;
 <span class="nc" id="L16">        TicketDAO ticketDAO = new TicketDAO();</span>
 <span class="nc" id="L17">        FareCalculatorService fareCalculatorService = new FareCalculatorService();</span>
 <span class="nc" id="L18">        ParkingService parkingService = new ParkingService(</span>
-<span class="nc" id="L19">                inputReaderUtil,</span>
-<span class="nc" id="L20">                parkingSpotDAO,</span>
-<span class="nc" id="L21">                ticketDAO,</span>
-<span class="nc" id="L22">                fareCalculatorService);</span>
+                inputReaderUtil,
+                parkingSpotDAO,
+                ticketDAO,
+                fareCalculatorService);
 <span class="nc" id="L23">        InteractiveShell interactiveShell = new InteractiveShell(inputReaderUtil, parkingService);</span>
         try {
 <span class="nc" id="L25">            interactiveShell.loadInterface();</span>
 <span class="nc" id="L26">        } catch (Exception e) {</span>
 <span class="nc" id="L27">            logger.error(&quot;Error occured running Parking System&quot;, e);</span>
-        }
+<span class="nc" id="L28">        }</span>
 <span class="nc" id="L29">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

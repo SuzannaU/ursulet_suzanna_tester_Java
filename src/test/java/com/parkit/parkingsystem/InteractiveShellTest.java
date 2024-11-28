@@ -49,18 +49,10 @@ public class InteractiveShellTest {
                 .thenReturn(1)
                 .thenReturn(3);
         doThrow(new IllegalArgumentException()).when(parkingService).processIncomingVehicle();
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
         assertThrows(IllegalArgumentException.class, () -> interactiveShell.loadInterface());
-        interactiveShell.loadInterface();
 
-        // Assert : Vérifier que le message "Exiting from the system!" est affiché
-        String consoleOutput = outContent.toString();
-        assertTrue(consoleOutput.contains(
-                "Please select vehicle type from menu"));
-
-        verify(inputReaderUtil, times(2)).readSelection();
+        verify(inputReaderUtil).readSelection();
         verify(parkingService).processIncomingVehicle();
     }
 
@@ -70,18 +62,10 @@ public class InteractiveShellTest {
                 .thenReturn(2)
                 .thenReturn(3);
         doThrow(new IllegalArgumentException()).when(parkingService).processExitingVehicle();
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
         assertThrows(IllegalArgumentException.class, () -> interactiveShell.loadInterface());
-        interactiveShell.loadInterface();
 
-        // Assert : Vérifier que le message "Exiting from the system!" est affiché
-        String consoleOutput = outContent.toString();
-        assertTrue(consoleOutput.contains(
-                "Please type the vehicle registration number and press enter key"));
-
-        verify(inputReaderUtil, times(2)).readSelection();
+        verify(inputReaderUtil).readSelection();
         verify(parkingService).processExitingVehicle();
     }
 

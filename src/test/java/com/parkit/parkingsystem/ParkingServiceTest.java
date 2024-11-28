@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -135,8 +137,8 @@ public class ParkingServiceTest {
                 parkingService.processExitingVehicle();
             });
 
-            verify(ticketDAO).getTicket(any(String.class));
             verify(inputReaderUtil).readVehicleRegistrationNumber();
+            verify(ticketDAO).getTicket(any(String.class));
             verify(fareCalculatorService).calculateFare(any(Ticket.class));
             verify(ticketDAO).updateTicket(any(Ticket.class));
             verify(parkingSpotDAO).updateParking(any(ParkingSpot.class));
@@ -148,12 +150,30 @@ public class ParkingServiceTest {
 
             assertThrows(SQLException.class, () -> parkingService.processExitingVehicle());
 
-            verify(ticketDAO).getTicket(any(String.class));
             verify(inputReaderUtil).readVehicleRegistrationNumber();
+            verify(ticketDAO).getTicket(any(String.class));
             verify(fareCalculatorService).calculateFare(any(Ticket.class));
             verify(ticketDAO).updateTicket(any(Ticket.class));
         }
     }
+
+    @Test
+    public void processExitingVehicle_withIncorrectRegNumber_printsMesssage() throws SQLException {
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        when(ticketDAO.getTicket(any(String.class))).thenReturn(null);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        parkingService.processExitingVehicle();
+
+        String consoleOutput = outContent.toString();
+        assertTrue(consoleOutput.contains("No ticket was found with this registration number"));
+        System.setOut(System.out);
+        
+        verify(inputReaderUtil).readVehicleRegistrationNumber();
+        verify(ticketDAO).getTicket(any(String.class));
+    }
+
 
     @Nested
     @Tag("getNextParkingNumberIfAvailable tests")

@@ -15,7 +15,7 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc" id="L15">        double duration = (outHour - inHour) / 60_000;</span>
 <span class="fc bfc" id="L16" title="All 2 branches covered.">        if (duration &lt;= 29.9) {</span>
 <span class="fc" id="L17">            ticket.setPrice(0.0);</span>
-<span class="fc" id="L18">        } else {</span>
+        } else {
             double basePrice;
 <span class="pc bpc" id="L20" title="1 of 3 branches missed.">            switch (ticket.getParkingSpot().getParkingType()) {</span>
                 case CAR: {
