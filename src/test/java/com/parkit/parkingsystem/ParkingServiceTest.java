@@ -57,7 +57,6 @@ public class ParkingServiceTest {
     @Nested
     @Tag("processIncomingVehicle tests")
     class processIncomingVehicleTests {
-
         @Test
         public void processIncomingVehicle_carWithCorrectParameters_doesNotThrow() {
             when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -72,7 +71,6 @@ public class ParkingServiceTest {
             verify(parkingSpotDAO).getNextAvailableSlot((ParkingType.CAR));
             verify(inputReaderUtil).readVehicleRegistrationNumber();
             verify(ticketDAO).getNbTicket(any(String.class));
-            verify(parkingSpotDAO).getNextAvailableSlot((ParkingType.CAR));
             verify(parkingSpotDAO).updateParking(any(ParkingSpot.class));
             verify(ticketDAO).saveTicket(any(Ticket.class));
         }
@@ -91,7 +89,6 @@ public class ParkingServiceTest {
             verify(parkingSpotDAO).getNextAvailableSlot((ParkingType.BIKE));
             verify(inputReaderUtil).readVehicleRegistrationNumber();
             verify(ticketDAO).getNbTicket(any(String.class));
-            verify(parkingSpotDAO).getNextAvailableSlot((ParkingType.BIKE));
             verify(parkingSpotDAO).updateParking(any(ParkingSpot.class));
             verify(ticketDAO).saveTicket(any(Ticket.class));
         }
@@ -169,7 +166,6 @@ public class ParkingServiceTest {
         String consoleOutput = outContent.toString();
         assertTrue(consoleOutput.contains("No ticket was found with this registration number"));
         System.setOut(System.out);
-        
         verify(inputReaderUtil).readVehicleRegistrationNumber();
         verify(ticketDAO).getTicket(any(String.class));
     }
@@ -204,7 +200,7 @@ public class ParkingServiceTest {
         }
 
         @Test
-        public void getNextParkingNumberIfAvailable_whenParkingWrongType_returnsNullParkingSpot()
+        public void getNextParkingNumberIfAvailable_whenWrongParkingType_returnsNullParkingSpot()
                 throws Exception {
             when(inputReaderUtil.readSelection()).thenReturn(3);
 

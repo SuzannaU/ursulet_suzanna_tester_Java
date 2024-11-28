@@ -97,6 +97,7 @@ public class ParkingDataBaseIT {
         Thread.sleep(1000); // adds delay to ensure OUT_TIME is always after IN_TIME
 
         parkingService.processExitingVehicle();
+
         String statement = "SELECT OUT_TIME, PRICE FROM ticket WHERE `VEHICLE_REG_NUMBER` = ?";
         try (Connection con = dataBaseTestConfig.getConnection();
                 PreparedStatement ps = con.prepareStatement(statement);) {
@@ -131,10 +132,9 @@ public class ParkingDataBaseIT {
             ps.setDouble(5, 1.0);
             ps.execute();
         }
-
+        // Create test ticket
         parkingService.processIncomingVehicle();
-
-        // Update test ticket for a 2-hour Stay
+        // Update test ticket with a 2-hour stay
         String alterStatement = "UPDATE ticket SET IN_TIME = ? WHERE ID = ?";
         try (Connection con = dataBaseTestConfig.getConnection();
                 PreparedStatement ps = con.prepareStatement(alterStatement);) {
@@ -143,10 +143,8 @@ public class ParkingDataBaseIT {
             ps.execute();
         }
 
-        // Act
         parkingService.processExitingVehicle();
 
-        // Assert
         String resultStatement = "SELECT PRICE FROM ticket WHERE ID = ?";
         try (Connection con = dataBaseTestConfig.getConnection();
                 PreparedStatement ps = con.prepareStatement(resultStatement);) {

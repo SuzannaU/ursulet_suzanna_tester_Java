@@ -120,9 +120,9 @@ public class ParkingService {
 <span class="fc" id="L120">                ParkingSpot parkingSpot = ticket.getParkingSpot();</span>
 <span class="fc" id="L121">                parkingSpot.setAvailable(true);</span>
 <span class="fc" id="L122">                parkingSpotDAO.updateParking(parkingSpot);</span>
-<span class="fc" id="L123">                System.out.println(&quot;Please pay the parking fare:&quot; + ticket.getPrice());</span>
-<span class="fc" id="L124">                System.out.println(&quot;Recorded out-time for vehicle number:&quot;</span>
-<span class="fc" id="L125">                        + ticket.getVehicleRegNumber() + &quot; is:&quot; + outTime);</span>
+<span class="fc" id="L123">                System.out.println(&quot;Please pay the parking fare: &quot; + ticket.getPrice());</span>
+<span class="fc" id="L124">                System.out.println(&quot;Recorded out-time for vehicle number: &quot;</span>
+<span class="fc" id="L125">                        + ticket.getVehicleRegNumber() + &quot; is: &quot; + outTime);</span>
 <span class="fc" id="L126">            } else {</span>
 <span class="fc" id="L127">                logger.error(&quot;Unable to process exiting vehicle&quot;);</span>
 <span class="fc" id="L128">                throw new SQLException(&quot;Unable to update ticket information. Error occurred&quot;);</span>

@@ -32,7 +32,4 @@ public class InputReaderUtil {
         }
         return vehicleRegNumber;
     }
-
-
-
 }

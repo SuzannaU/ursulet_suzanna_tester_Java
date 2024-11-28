@@ -48,9 +48,9 @@ public class InteractiveShellTest {
         when(inputReaderUtil.readSelection())
                 .thenReturn(1)
                 .thenReturn(3);
-        doThrow(new IllegalArgumentException()).when(parkingService).processIncomingVehicle();
+        doThrow(new Exception()).when(parkingService).processIncomingVehicle();
 
-        assertThrows(IllegalArgumentException.class, () -> interactiveShell.loadInterface());
+        assertThrows(Exception.class, () -> interactiveShell.loadInterface());
 
         verify(inputReaderUtil).readSelection();
         verify(parkingService).processIncomingVehicle();
@@ -71,44 +71,30 @@ public class InteractiveShellTest {
 
     @Test
     public void loadInterface_whenCase3_printsMessage() throws Exception {
-        // Arrange : Simule que l'utilisateur sélectionne l'option 3
         when(inputReaderUtil.readSelection()).thenReturn(3);
-
-        // Redirect System.out to capture printed output
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        // Act : Lancer la méthode
         interactiveShell.loadInterface();
 
-        // Assert : Vérifier que le message "Exiting from the system!" est affiché
         String consoleOutput = outContent.toString();
         assertTrue(consoleOutput.contains("Exiting from the system!"));
-
-        // Clean-up : Reset System.out
         System.setOut(System.out);
     }
 
     @Test
     public void loadInterface_whenDefault_printsMessage() throws Exception {
-        // Arrange : Simule que l'utilisateur sélectionne l'option 3
         when(inputReaderUtil.readSelection())
                 .thenReturn(4)
                 .thenReturn(3);
-
-        // Redirect System.out to capture printed output
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        // Act : Lancer la méthode
         interactiveShell.loadInterface();
 
-        // Assert : Vérifier que le message "Exiting from the system!" est affiché
         String consoleOutput = outContent.toString();
         assertTrue(consoleOutput.contains(
                 "Unsupported option. Please enter a number corresponding to the provided menu"));
-
-        // Clean-up : Reset System.out
         System.setOut(System.out);
     }
 }
