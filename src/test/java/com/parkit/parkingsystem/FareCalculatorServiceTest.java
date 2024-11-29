@@ -113,17 +113,31 @@ public class FareCalculatorServiceTest {
     }
 
     @Test
-    void calculateFare_whenCarParkingTimeOverADay_setsTicketPrice() {
-        initializeTicket(ParkingType.CAR, 24 * 60 * 60 * 1000, false);
+    void calculateFare_whenCarParkingTimeIsThirtyMinutes_setsTicketPrice() {
+        initializeTicket(ParkingType.CAR, 30 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        assertEquals(24 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+        assertEquals(0.5 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+    }
+
+    @Test
+    void calculateFare_whenBikeParkingIsThirtyMinutes_setsTicketPric() {
+        initializeTicket(ParkingType.BIKE, 30 * 60 * 1000, false);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals(0.5 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+    }
+
+    @Test
+    void calculateFare_whenCarParkingTimeOverADay_setsTicketPrice() {
+        initializeTicket(ParkingType.CAR, 25 * 60 * 60 * 1000, false);
+        fareCalculatorService.calculateFare(ticket);
+        assertEquals(25 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
     void calculateFare_whenBikeParkingTimeOverADay_setsTicketPrice() {
-        initializeTicket(ParkingType.BIKE, 24 * 60 * 60 * 1000, false);
+        initializeTicket(ParkingType.BIKE, 25 * 60 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
-        assertEquals(24 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
+        assertEquals(25 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test

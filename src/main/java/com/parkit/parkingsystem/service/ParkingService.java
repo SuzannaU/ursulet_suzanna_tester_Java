@@ -50,17 +50,23 @@ public class ParkingService {
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
                 ticket.setDiscount(discount);
-                ticketDAO.saveTicket(ticket);
-                System.out.println("Generated Ticket and saved in DB");
-                if (discount) {
+                if (ticketDAO.saveTicket(ticket)) {
+                    System.out.println("Generated Ticket and saved in DB");
+                    if (discount) {
+                        System.out.println(
+                                "Nice to see you again! As a recurrent user, you'll get a 5% discount on your parking fare");
+                    }
                     System.out.println(
-                            "Nice to see you again! As a recurrent user, you'll get a 5% discount on your parking fare");
+                            "Please park your vehicle in spot number: " + parkingSpot.getId());
+                    System.out.println(
+                            "For vehicle number:" + vehicleRegNumber + ", in-time is: " + inTime);
+                } else {
+                    throw new SQLException("Unable to save ticket informations. Error occurred");
                 }
-                System.out.println(
-                        "Please park your vehicle in spot number: " + parkingSpot.getId());
-                System.out.println(
-                        "For vehicle number:" + vehicleRegNumber + ", in-time is: " + inTime);
             }
+        } catch (SQLException e) {
+            logger.error("Unable to save ticket informations. Error occured", e);
+            throw new SQLException();
         } catch (Exception e) {
             logger.error("Unable to process incoming vehicle", e);
             throw new Exception();
@@ -109,7 +115,7 @@ public class ParkingService {
         }
     }
 
-    public void processExitingVehicle() throws SQLException {
+    public void processExitingVehicle() throws Exception {
         String vehicleRegNumber = getVehichleRegNumber();
         try {
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);

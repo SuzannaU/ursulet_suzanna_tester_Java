@@ -58,10 +58,11 @@ public class ParkingServiceTest {
     @Tag("processIncomingVehicle tests")
     class processIncomingVehicleTests {
         @Test
-        public void processIncomingVehicle_carWithCorrectParameters_doesNotThrow() {
+        public void processIncomingVehicle_carWithCorrectParameters_doesNotThrow() throws SQLException {
             when(inputReaderUtil.readSelection()).thenReturn(1);
             when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(1);
             when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+            when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
 
             assertDoesNotThrow(() -> {
                 parkingService.processIncomingVehicle();
@@ -76,10 +77,11 @@ public class ParkingServiceTest {
         }
 
         @Test
-        public void processIncomingVehicle_bikeWithCorrectParameters_doesNotThrow() {
+        public void processIncomingVehicle_bikeWithCorrectParameters_doesNotThrow() throws SQLException {
             when(inputReaderUtil.readSelection()).thenReturn(2);
             when(parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE)).thenReturn(1);
             when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+            when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
 
             assertDoesNotThrow(() -> {
                 parkingService.processIncomingVehicle();
@@ -102,6 +104,23 @@ public class ParkingServiceTest {
 
             verify(inputReaderUtil).readSelection();
             verify(parkingSpotDAO).getNextAvailableSlot(any(ParkingType.class));
+        }
+
+        @Test
+        public void processIncomingVehicle_whenUnableToUpdateDB_throwsException() throws SQLException {
+            when(inputReaderUtil.readSelection()).thenReturn(1);
+            when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
+            when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+            when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(false);
+
+            assertThrows(SQLException.class, () -> parkingService.processIncomingVehicle());
+
+            verify(inputReaderUtil).readSelection();
+            verify(parkingSpotDAO).getNextAvailableSlot(any(ParkingType.class));
+            verify(inputReaderUtil).readVehicleRegistrationNumber();
+            verify(ticketDAO).getNbTicket(any(String.class));
+            verify(parkingSpotDAO).updateParking(any(ParkingSpot.class));
+            verify(ticketDAO).saveTicket(any(Ticket.class));
         }
     }
 
@@ -155,7 +174,7 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void processExitingVehicle_withIncorrectRegNumber_printsMesssage() throws SQLException {
+    public void processExitingVehicle_withIncorrectRegNumber_printsMesssage() throws Exception {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         when(ticketDAO.getTicket(any(String.class))).thenReturn(null);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();

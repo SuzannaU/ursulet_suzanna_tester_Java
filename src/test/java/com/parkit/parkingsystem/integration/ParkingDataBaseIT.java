@@ -7,7 +7,6 @@ import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.service.FareCalculatorService;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,9 +65,6 @@ public class ParkingDataBaseIT {
                 ticketDAO,
                 fareCalculatorService);
     }
-
-    @AfterAll
-    private static void tearDown() {}
 
     @Test
     public void processIncommingVehicle_withCorrectParamters_setsParkingSpotUnavailable()

@@ -37,7 +37,7 @@ public class TicketDAO {
             ps.setBoolean(6, ticket.getDiscount());
             return ps.execute();
         } catch (SQLException | ClassNotFoundException e) {
-            logger.error("Error fetching next available slot", e);
+            logger.error("Error saving ticket", e);
             return false;
         } finally {
             dataBaseConfig.closePreparedStatement(ps);

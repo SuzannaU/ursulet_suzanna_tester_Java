@@ -61,9 +61,9 @@ public class InteractiveShellTest {
         when(inputReaderUtil.readSelection())
                 .thenReturn(2)
                 .thenReturn(3);
-        doThrow(new IllegalArgumentException()).when(parkingService).processExitingVehicle();
+        doThrow(new Exception()).when(parkingService).processExitingVehicle();
 
-        assertThrows(IllegalArgumentException.class, () -> interactiveShell.loadInterface());
+        assertThrows(Exception.class, () -> interactiveShell.loadInterface());
 
         verify(inputReaderUtil).readSelection();
         verify(parkingService).processExitingVehicle();
