@@ -70,59 +70,58 @@ import java.sql.Timestamp;
 <span class="fc" id="L70">                ticket.setDiscount(rs.getBoolean(6));</span>
 <span class="fc" id="L71">            } else {</span>
 <span class="nc" id="L72">                logger.error(&quot;No ticket was found with this registration number&quot;);</span>
-<span class="nc" id="L73">                throw new NullPointerException();</span>
             }
-<span class="fc" id="L75">            dataBaseConfig.closeResultSet(rs);</span>
-<span class="fc" id="L76">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L77">        } catch (SQLException | ClassNotFoundException e) {</span>
-<span class="nc" id="L78">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
+<span class="fc" id="L74">            dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L75">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="nc" id="L76">        } catch (SQLException | ClassNotFoundException e) {</span>
+<span class="nc" id="L77">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
         } finally {
-<span class="fc" id="L80">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L79">            dataBaseConfig.closeConnection(con);</span>
         }
-<span class="fc" id="L82">        return ticket;</span>
+<span class="fc" id="L81">        return ticket;</span>
     }
 
     public boolean updateTicket(Ticket ticket) {
-<span class="fc" id="L86">        Connection con = null;</span>
-<span class="fc" id="L87">        PreparedStatement ps = null;</span>
+<span class="fc" id="L85">        Connection con = null;</span>
+<span class="fc" id="L86">        PreparedStatement ps = null;</span>
         try {
-<span class="fc" id="L89">            con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L90">            ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
+<span class="fc" id="L88">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L89">            ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
             // PRICE, OUT_TIME, ID
-<span class="fc" id="L92">            ps.setDouble(1, ticket.getPrice());</span>
-<span class="fc" id="L93">            ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));</span>
-<span class="fc" id="L94">            ps.setInt(3, ticket.getId());</span>
-<span class="fc" id="L95">            ps.execute();</span>
-<span class="fc" id="L96">            return true;</span>
-<span class="nc" id="L97">        } catch (SQLException | ClassNotFoundException e) {</span>
-<span class="nc" id="L98">            logger.error(&quot;Error saving ticket info&quot;, e);</span>
+<span class="fc" id="L91">            ps.setDouble(1, ticket.getPrice());</span>
+<span class="fc" id="L92">            ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));</span>
+<span class="fc" id="L93">            ps.setInt(3, ticket.getId());</span>
+<span class="fc" id="L94">            ps.execute();</span>
+<span class="fc" id="L95">            return true;</span>
+<span class="nc" id="L96">        } catch (SQLException | ClassNotFoundException e) {</span>
+<span class="nc" id="L97">            logger.error(&quot;Error saving ticket info&quot;, e);</span>
         } finally {
-<span class="fc" id="L100">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="fc" id="L101">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L99">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="fc" id="L100">            dataBaseConfig.closeConnection(con);</span>
         }
-<span class="nc" id="L103">        return false;</span>
+<span class="nc" id="L102">        return false;</span>
     }
 
     public int getNbTicket(String vehicleRegNumber) {
-<span class="fc" id="L107">        int nbTicket = 0;</span>
-<span class="fc" id="L108">        Connection con = null;</span>
+<span class="fc" id="L106">        int nbTicket = 0;</span>
+<span class="fc" id="L107">        Connection con = null;</span>
         try {
-<span class="fc" id="L110">            con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L111">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NB_TICKET);</span>
+<span class="fc" id="L109">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L110">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NB_TICKET);</span>
             // VEHICLE_REG_NUMBER
-<span class="fc" id="L113">            ps.setString(1, vehicleRegNumber);</span>
-<span class="fc" id="L114">            ResultSet rs = ps.executeQuery();</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">            if (rs.next()) {</span>
-<span class="fc" id="L116">                nbTicket = rs.getInt(1);</span>
+<span class="fc" id="L112">            ps.setString(1, vehicleRegNumber);</span>
+<span class="fc" id="L113">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L115">                nbTicket = rs.getInt(1);</span>
             }
-<span class="fc" id="L118">            dataBaseConfig.closeResultSet(rs);</span>
-<span class="fc" id="L119">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L120">        } catch (SQLException | ClassNotFoundException e) {</span>
-<span class="nc" id="L121">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
+<span class="fc" id="L117">            dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L118">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="nc" id="L119">        } catch (SQLException | ClassNotFoundException e) {</span>
+<span class="nc" id="L120">            logger.error(&quot;Error fetching next available slot&quot;, e);</span>
         } finally {
-<span class="fc" id="L123">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L122">            dataBaseConfig.closeConnection(con);</span>
         }
-<span class="fc" id="L125">        return nbTicket;</span>
+<span class="fc" id="L124">        return nbTicket;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

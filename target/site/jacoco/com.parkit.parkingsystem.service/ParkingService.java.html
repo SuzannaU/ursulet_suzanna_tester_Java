@@ -117,25 +117,25 @@ public class ParkingService {
 
     public void processExitingVehicle() throws Exception {
 <span class="fc" id="L119">        String vehicleRegNumber = getVehichleRegNumber();</span>
-        try {
-<span class="fc" id="L121">            Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);</span>
-<span class="fc" id="L122">            Date outTime = new Date();</span>
-<span class="fc" id="L123">            ticket.setOutTime(outTime);</span>
-<span class="fc" id="L124">            fareCalculatorService.calculateFare(ticket);</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">            if (ticketDAO.updateTicket(ticket)) {</span>
-<span class="fc" id="L126">                ParkingSpot parkingSpot = ticket.getParkingSpot();</span>
-<span class="fc" id="L127">                parkingSpot.setAvailable(true);</span>
-<span class="fc" id="L128">                parkingSpotDAO.updateParking(parkingSpot);</span>
-<span class="fc" id="L129">                System.out.println(&quot;Please pay the parking fare: &quot; + ticket.getPrice());</span>
-<span class="fc" id="L130">                System.out.println(&quot;Recorded out-time for vehicle number: &quot;</span>
-<span class="fc" id="L131">                        + ticket.getVehicleRegNumber() + &quot; is: &quot; + outTime);</span>
-<span class="fc" id="L132">            } else {</span>
-<span class="fc" id="L133">                logger.error(&quot;Unable to process exiting vehicle&quot;);</span>
-<span class="fc" id="L134">                throw new SQLException(&quot;Unable to update ticket information. Error occurred&quot;);</span>
-            }
-<span class="fc" id="L136">        } catch (NullPointerException e) {</span>
-<span class="fc" id="L137">            System.out.println(&quot;No ticket was found with this registration number&quot;);</span>
-<span class="fc" id="L138">        }</span>
+<span class="fc" id="L120">        Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (ticket == null) {</span>
+<span class="fc" id="L122">            System.out.println(&quot;No ticket was found with this registration number&quot;);</span>
+<span class="fc" id="L123">            return;</span>
+        }
+<span class="fc" id="L125">        Date outTime = new Date();</span>
+<span class="fc" id="L126">        ticket.setOutTime(outTime);</span>
+<span class="fc" id="L127">        fareCalculatorService.calculateFare(ticket);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (ticketDAO.updateTicket(ticket)) {</span>
+<span class="fc" id="L129">            ParkingSpot parkingSpot = ticket.getParkingSpot();</span>
+<span class="fc" id="L130">            parkingSpot.setAvailable(true);</span>
+<span class="fc" id="L131">            parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L132">            System.out.println(&quot;Please pay the parking fare: &quot; + ticket.getPrice());</span>
+<span class="fc" id="L133">            System.out.println(&quot;Recorded out-time for vehicle number: &quot;</span>
+<span class="fc" id="L134">                    + ticket.getVehicleRegNumber() + &quot; is: &quot; + outTime);</span>
+<span class="fc" id="L135">        } else {</span>
+<span class="fc" id="L136">            logger.error(&quot;Unable to process exiting vehicle&quot;);</span>
+<span class="fc" id="L137">            throw new SQLException(&quot;Unable to update ticket information. Error occurred&quot;);</span>
+        }
 <span class="fc" id="L139">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
