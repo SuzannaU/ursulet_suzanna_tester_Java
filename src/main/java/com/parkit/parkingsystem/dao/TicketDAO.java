@@ -35,7 +35,8 @@ public class TicketDAO {
             ps.setTimestamp(5, (ticket.getOutTime() == null) ? null
                     : (new Timestamp(ticket.getOutTime().getTime())));
             ps.setBoolean(6, ticket.getDiscount());
-            return ps.execute();
+            ps.execute();
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
             logger.error("Error saving ticket", e);
             return false;

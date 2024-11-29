@@ -128,14 +128,14 @@ public class FareCalculatorServiceTest {
 
     @Test
     void calculateFare_whenCarParkingTimeOverADay_setsTicketPrice() {
-        initializeTicket(ParkingType.CAR, 25 * 60 * 60 * 1000, false);
+        initializeTicket(ParkingType.CAR, 1500 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
         assertEquals(25 * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
 
     @Test
     void calculateFare_whenBikeParkingTimeOverADay_setsTicketPrice() {
-        initializeTicket(ParkingType.BIKE, 25 * 60 * 60 * 1000, false);
+        initializeTicket(ParkingType.BIKE, 1500 * 60 * 1000, false);
         fareCalculatorService.calculateFare(ticket);
         assertEquals(25 * Fare.BIKE_RATE_PER_HOUR, ticket.getPrice(), 0.001);
     }
